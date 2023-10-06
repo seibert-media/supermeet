@@ -1,0 +1,27 @@
+impersonate_user = "supermeet@seibert-media.net"
+timezone = "Europe/Berlin"
+
+[multi.hq_blumenwiese]
+name = "HQ Blumenwiese"
+rooms = [
+    "hq_gaensebluemchen",
+    "hq_loewenmaeulchen",
+    "hq_maigloeckchen",
+    "hq_veilchen",
+]
+
+[rooms.google.hq_gaensebluemchen]
+name = "HQ Gänseblümchen"
+id = "c_18831qv13gjdqhmdl7ag6dglbrt1s@resource.calendar.google.com"
+
+[rooms.google.hq_loewenmaeulchen]
+name = "HQ Löwenmäulchen"
+id = "c_1883imn2mpbsug6tgaq6v19oa90j4@resource.calendar.google.com"
+
+[rooms.google.hq_maigloeckchen]
+name = "HQ Maiglöckchen"
+id = "c_188cd7l6mrhv2jdhnv3ln98maqu74@resource.calendar.google.com"
+
+[rooms.google.hq_veilchen]
+name = "HQ Veilchen"
+id = "c_1888outk2sn92j3chlmq78f301blm@resource.calendar.google.com"
