@@ -1,0 +1,61 @@
+* {
+    font-family: "Muli","Open Sans","OpenSans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 1.2em;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+a, a:link, a:visited {
+    color: #000000;
+    text-decoration: none;
+    border-bottom: 1px dotted #000000;
+}
+
+a:hover, a:focus, a:active {
+    border-bottom: 1px solid #000000;
+}
+
+h1 {
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    padding: 10px;
+}
+
+h2 {
+    font-size: 50px;
+    padding: 10px;
+    margin-top: 50px;
+}
+
+p {
+    font-size: 20px;
+    line-height: 30px;
+}
+
+button {
+    background-color: #808080;
+    border-radius: 5px;
+    border: none;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-weight: bolder;
+    padding: 10px;
+}
+
+ul {
+    list-style: none;
+}
+
+li {
+    padding: 5px;
+}
+
+#supermeet, #overview {
+    margin: 20px;
+}
+
+.buttons {
+    margin-top: 30px;
+}
