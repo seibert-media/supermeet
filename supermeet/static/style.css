@@ -19,7 +19,7 @@ a:hover, a:focus, a:active {
 h1 {
     background-color: black;
     color: white;
-    font-size: 20px;
+    font-size: 30px;
     padding: 10px;
 }
 
@@ -34,16 +34,6 @@ p {
     line-height: 30px;
 }
 
-button {
-    background-color: #808080;
-    border-radius: 5px;
-    border: none;
-    color: #FFFFFF;
-    cursor: pointer;
-    font-weight: bolder;
-    padding: 10px;
-}
-
 ul {
     list-style: none;
 }
@@ -52,10 +42,47 @@ li {
     padding: 5px;
 }
 
+fieldset {
+    border: none;
+    padding: 20px;
+}
+
+legend {
+    display: none;
+}
+
+label, span.info {
+    font-size: 20px;
+    display: block;
+}
+
+label {
+    margin-top: 30px;
+    font-weight: bolder;
+}
+
+input[type=text], input[type=range] {
+    width: 90vw;
+    font-size: 30px;
+    padding: 10px;
+}
+
 #supermeet, #overview {
     margin: 20px;
 }
 
 .buttons {
     margin-top: 30px;
+}
+
+.buttons a, .buttons a:link, .button a:visited, .buttons input {
+    background-color: #808080;
+    border-radius: 5px;
+    border: none;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bolder;
+    margin: 10px;
+    padding: 10px;
 }

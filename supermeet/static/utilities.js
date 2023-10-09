@@ -34,10 +34,15 @@ function time_until(time) {
     until = new Date(time).getTime();
 
     diff = until - now;
+    single = 'einer';
 
     if (diff > 86400) {
         value = parseInt(diff/86400);
-        name = 'Tage';
+        name = 'Tag';
+        single = 'einem';
+        if (value > 1) {
+            name += 'e';
+        }
     } else if (diff > 3600) {
         value = parseInt(diff/3600);
         name = 'Stunde';
@@ -49,8 +54,23 @@ function time_until(time) {
     }
 
     if (value > 1) {
-        return 'in ' + value + ' ' + name + 'n';
-    } else {
-        return 'in ' + value + ' ' + name;
+        name += 'n';
     }
+
+    switch (value) {
+        case 1:
+            value = single;
+            break;
+        case 2:
+            value = 'zwei';
+            break;
+        case 3:
+            value = 'drei';
+            break;
+        case 4:
+            value = 'vier';
+            break;
+    }
+
+    return 'in ' + value + ' ' + name;
 }

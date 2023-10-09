@@ -21,14 +21,23 @@ function update_display() {
             out += '<p>Nächster Termin ' + time_until(next['start']) + '</p>';
         }
 
+        out += '<p class="buttons">';
         if ((ends - now) > 600) {
-            out += '<p class="buttons"><button onclick="cancel_event(\'' + current['id'] + '\');">Vorzeitig beenden</button></p>';
+            out += '<a href="' + booking_link + '?end_now">Vorzeitig beenden</a>';
         }
+        out += '<a href="' + booking_link + '">Buchung verändern</a>';
+        out += '</p>';
     } else if (next) {
         out += '<h2>' + next['title'] + '</h2>';
         out += '<p>startet ' + time_until(next['start']) + '</p>';
     } else {
         out += '<p>Frei für mehr als 7 Tage</p>';
+    }
+
+    if (!current) {
+        out += '<p class="buttons">';
+        out += '<a href="' + booking_link + '">Raum buchen</a>';
+        out += '</p>';
     }
 
     if (current) {
@@ -53,27 +62,4 @@ function fetch_events() {
         events = JSON.parse(req.responseText);
     });
     req.send();
-}
-
-function cancel_event(event_id) {
-    console.warn('cancelling event with id ' + event_id);
-
-    params = JSON.stringify({
-        event_id: event_id,
-        until: new Date().toISOString()
-    })
-
-    req = new XMLHttpRequest();
-    req.open('POST', api_event_cancel);
-    req.setRequestHeader('Accept', 'application/json');
-    req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    req.addEventListener('load', function(event) {
-        console.debug(req.responseText);
-        result = JSON.parse(req.responseText);
-
-        if (result['status'] == 'ok') {
-            fetch_events();
-        }
-    });
-    req.send(params);
 }

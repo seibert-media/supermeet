@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 from os import environ
 
 import googleapiclient.discovery
+
 from google.oauth2 import service_account
 
 from . import CONFIG
@@ -21,7 +22,7 @@ class GoogleAPI:
         )
 
     def _date(self, dt):
-        return dt.isoformat('T') + 'Z'
+        return dt.replace(tzinfo=None).isoformat('T') + 'Z'
 
     def get_room(self, room_id):
         return self.api.calendars().get(calendarId=room_id).execute()
@@ -64,6 +65,26 @@ class GoogleAPI:
             if not page_token:
                 break
         return all_events
+
+    def create_event(self, room_id, title, start, end):
+        return (
+            self.api.events()
+            .insert(
+                calendarId=room_id,
+                body={
+                    'end': {
+                        'dateTime': end,
+                        'timeZone': CONFIG['timezone'],
+                    },
+                    'start': {
+                        'dateTime': start,
+                        'timeZone': CONFIG['timezone'],
+                    },
+                    'summary': title,
+                },
+            )
+            .execute()
+        )
 
     def patch_room_event_end_time(self, room_id, event_id, until):
         return (

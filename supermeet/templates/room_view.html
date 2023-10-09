@@ -5,7 +5,7 @@
 {% block head %}
         <script type="text/javascript">
             api_room_events = "{{ url_for('api_room_events', room_id=room_id) }}";
-            api_event_cancel = "{{ url_for('api_room_event_cancel', room_id=room_id) }}";
+            booking_link = "{{ url_for('room_change_or_book', room_id=room_id) }}";
         </script>
         <script src="{{ url_for('static', filename='room_view.js') }}"></script>
 {% endblock %}
