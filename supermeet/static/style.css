@@ -40,6 +40,10 @@ p {
     line-height: 30px;
 }
 
+p span {
+    font-weight: bolder;
+}
+
 ul {
     list-style: none;
 }
