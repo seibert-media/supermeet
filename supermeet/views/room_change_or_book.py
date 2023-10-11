@@ -67,7 +67,10 @@ def room_change_or_book(room_id):
 
     slider_value = 60
     if current_event:
-        slider_value = int((datetime.fromisoformat(event['end']['dateTime']) - now).total_seconds() / 60)
+        slider_value = int(
+            (datetime.fromisoformat(event['end']['dateTime']) - now).total_seconds()
+            / 60
+        )
 
     if not event_id and current_event:
         event_id = current_event['id']

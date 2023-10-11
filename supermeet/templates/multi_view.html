@@ -4,6 +4,7 @@
 
 {% block head %}
         <script type="text/javascript">
+            app_startup = {{ app_startup }};
             rooms = {};
 {% for room in rooms %}
             rooms["{{ room.name }}"] = "{{ url_for('api_room_events', room_id=room.id) }}";

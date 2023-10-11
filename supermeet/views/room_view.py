@@ -1,6 +1,6 @@
 from flask import abort, render_template
 
-from .. import CONFIG
+from .. import APP_STARTUP, CONFIG
 from ..web import app
 
 
@@ -10,5 +10,8 @@ def room_view(room_id):
         abort(404)
 
     return render_template(
-        'room_view.html', room_id=room_id, room=CONFIG['rooms']['google'][room_id]
+        'room_view.html',
+        app_startup=APP_STARTUP,
+        room=CONFIG['rooms']['google'][room_id],
+        room_id=room_id,
     )

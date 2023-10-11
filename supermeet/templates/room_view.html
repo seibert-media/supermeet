@@ -4,6 +4,7 @@
 
 {% block head %}
         <script type="text/javascript">
+            app_startup = {{ app_startup }};
             api_room_events = "{{ url_for('api_room_events', room_id=room_id) }}";
             booking_link = "{{ url_for('room_change_or_book', room_id=room_id) }}";
         </script>

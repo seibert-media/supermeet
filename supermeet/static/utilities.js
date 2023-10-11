@@ -80,3 +80,18 @@ function time_until(time) {
 
     return 'in ' + value + ' ' + name;
 }
+
+window.setInterval(function() {
+    console.info('checking if GUI needs reloading because server has restarted');
+
+    req = new XMLHttpRequest();
+    req.open('GET', '/api/app-startup-time/');
+    req.addEventListener('load', function(event) {
+        startup = parseInt(req.responseText);
+        if (startup > 0 && app_startup < startup) {
+            console.warn('startup time has changed, reloading GUI');
+            window.location.reload();
+        }
+    });
+    req.send();
+}, 42000);
