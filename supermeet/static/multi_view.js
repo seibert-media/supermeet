@@ -20,7 +20,7 @@ function update_display() {
         if (current) {
             ends = new Date(current['end']).getTime();
 
-            booked += '<h2>' + room + '<br>' + current['title'] + '</h2>';
+            booked += '<h2><span>' + room + '</span> ' + current['title'] + '</h2>';
             booked += '<p>endet ' + time_until(current['end']) + '</p>';
             if (next) {
                 booked += '<p>Nächster Termin ' + time_until(next['start']) + '</p>';
@@ -28,7 +28,7 @@ function update_display() {
 
             num_booked += 1;
         } else if (next) {
-            available += '<h2>' + room + '<br>' + next['title'] + '</h2>';
+            available += '<h2><span>' + room + '</span> ' + next['title'] + '</h2>';
             available += '<p>startet ' + time_until(next['start']) + '</p>';
         } else {
             available += '<h2>' + room + '</h2>';
