@@ -18,8 +18,6 @@ function update_display() {
         next = get_next_event(evts);
 
         if (current) {
-            ends = new Date(current['end']).getTime();
-
             booked += '<h2><span>' + room + '</span> ' + current['title'] + '</h2>';
             booked += '<p>endet ' + time_until(current['end']) + '</p>';
             if (next) {
