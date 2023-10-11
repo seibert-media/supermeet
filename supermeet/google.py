@@ -11,18 +11,18 @@ from . import CONFIG
 class GoogleAPI:
     def __init__(self):
         credentials = service_account.Credentials.from_service_account_file(
-            environ['APP_SECRETS'],
+            environ["APP_SECRETS"],
             scopes=[
-                'https://www.googleapis.com/auth/calendar',
+                "https://www.googleapis.com/auth/calendar",
             ],
-        ).with_subject(CONFIG['impersonate_user'])
+        ).with_subject(CONFIG["impersonate_user"])
 
         self.api = googleapiclient.discovery.build(
-            'calendar', 'v3', credentials=credentials
+            "calendar", "v3", credentials=credentials
         )
 
     def _date(self, dt):
-        return dt.replace(tzinfo=None).isoformat('T') + 'Z'
+        return dt.replace(tzinfo=None).isoformat("T") + "Z"
 
     def get_room(self, room_id):
         return self.api.calendars().get(calendarId=room_id).execute()
@@ -48,14 +48,14 @@ class GoogleAPI:
                 )
                 .execute()
             )
-            page_token = events.get('nextPageToken')
-            for event in events.get('items', []):
-                if event.get('status') == 'confirmed':
+            page_token = events.get("nextPageToken")
+            for event in events.get("items", []):
+                if event.get("status") == "confirmed":
                     room_accepted = False
-                    if event.get('attendees'):
-                        for attendee in event['attendees']:
-                            if attendee.get('email') == room_id:
-                                if attendee.get('responseStatus') == 'accepted':
+                    if event.get("attendees"):
+                        for attendee in event["attendees"]:
+                            if attendee.get("email") == room_id:
+                                if attendee.get("responseStatus") == "accepted":
                                     room_accepted = True
                                 break
                     else:
@@ -72,15 +72,15 @@ class GoogleAPI:
             .insert(
                 calendarId=room_id,
                 body={
-                    'end': {
-                        'dateTime': end,
-                        'timeZone': CONFIG['timezone'],
+                    "end": {
+                        "dateTime": end,
+                        "timeZone": CONFIG["timezone"],
                     },
-                    'start': {
-                        'dateTime': start,
-                        'timeZone': CONFIG['timezone'],
+                    "start": {
+                        "dateTime": start,
+                        "timeZone": CONFIG["timezone"],
                     },
-                    'summary': title,
+                    "summary": title,
                 },
             )
             .execute()
@@ -93,9 +93,9 @@ class GoogleAPI:
                 calendarId=room_id,
                 eventId=event_id,
                 body={
-                    'end': {
-                        'dateTime': until,
-                        'timeZone': CONFIG['timezone'],
+                    "end": {
+                        "dateTime": until,
+                        "timeZone": CONFIG["timezone"],
                     },
                 },
             )
