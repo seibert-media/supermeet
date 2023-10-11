@@ -16,17 +16,23 @@ function get_current_event(events) {
 
 function get_next_event(events) {
     now = new Date(Date.now()).getTime()/1000;
+    next_event_time = 0;
+    next_event = null;
 
     for (i in events) {
         event = events[i];
 
         event_start = new Date(event['start']).getTime();
 
-        if (event_start > now) {
-            return event;
+        if (
+            event_start > now &&
+            (next_event_time == 0 || event_start < next_event_time)
+        ) {
+            next_event_time = event_start;
+            next_event = event;
         }
     }
-    return null;
+    return next_event;
 }
 
 function time_until(time) {
