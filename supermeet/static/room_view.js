@@ -18,7 +18,7 @@ function update_display() {
         out += '<h2>' + current['title'] + '</h2>';
         out += '<p>endet ' + time_until(current['end']) + '</p>';
         if (next) {
-            out += '<p>Nächster Termin ' + time_until(next['start']) + '</p>';
+            out += '<p>' + next['title'] + ' ' + time_until(next['start']) + '</p>';
         }
 
         out += '<p class="buttons">';

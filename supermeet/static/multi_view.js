@@ -23,7 +23,7 @@ function update_display() {
             booked += '<h2><span>' + room + '</span> ' + current['title'] + '</h2>';
             booked += '<p>endet ' + time_until(current['end']) + '</p>';
             if (next) {
-                booked += '<p>Nächster Termin ' + time_until(next['start']) + '</p>';
+                booked += '<p>' + next['title'] + ' ' + time_until(next['start']) + '</p>';
             }
 
             num_booked += 1;
