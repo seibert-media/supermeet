@@ -81,21 +81,31 @@ function time_until(time) {
     return 'in ' + value + ' ' + name;
 }
 
-window.setInterval(function() {
-    console.info('checking if GUI needs reloading because server has restarted');
-
+function xhr_get(url, callback_func) {
     req = new XMLHttpRequest();
     req.timeout = 10000;
-    req.open('GET', '/api/app-startup-time/');
+    req.open('GET', url);
+    req.setRequestHeader('Accept', 'application/json');
+    req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     req.addEventListener('load', function(event) {
         if (req.status != 200) {
             return;
         }
+
+        callback_func(event);
+    });
+    req.send();
+}
+
+
+window.setInterval(function() {
+    console.info('checking if GUI needs reloading because server has restarted');
+
+    xhr_get('/api/app-startup-time/', function(event) {
         startup = parseInt(req.responseText);
         if (startup > 0 && app_startup < startup) {
             console.warn('startup time has changed, reloading GUI');
             window.location.reload();
         }
     });
-    req.send();
 }, 42000);

@@ -51,16 +51,7 @@ window.setInterval(update_display, 1000);
 function fetch_events(room_name) {
     console.info('fetching events for ' + room_name + ' from ' + rooms[room_name]);
 
-    req = new XMLHttpRequest();
-    req.timeout = 10000;
-    req.open('GET', rooms[room_name]);
-    req.setRequestHeader('Accept', 'application/json');
-    req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    req.addEventListener('load', function(event) {
-        if (req.status != 200) {
-            return;
-        }
+    xhr_get(rooms[room_name], function(event) {
         events[room_name] = JSON.parse(req.responseText);
     });
-    req.send();
 }
