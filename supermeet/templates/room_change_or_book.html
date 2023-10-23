@@ -27,7 +27,7 @@
 {% endif %}
 
                     <label for="input_minutes">Länge in Minuten</label>
-                    <input type="range" min="10" max="{{ minutes_until_next_event }}" step="10" name="input_minutes" id="input_minutes" value="{{ slider_value }}"><br>
+                    <input type="range" min="10" max="{{ minutes_until_next_event }}" step="5" name="input_minutes" id="input_minutes" value="{{ slider_value }}"><br>
                     <span id="input_minutes_debug" class="info"></span><br>
 
                     <p class="buttons">
@@ -39,16 +39,21 @@
         </div>
         <script type="text/javascript">
             mins = document.getElementById('input_minutes');
+            title = document.getElementById('input_title');
 
             function update_helper() {
                 document.getElementById('input_minutes_debug').innerHTML = mins.value + ' Minuten';
             }
 
-            mins.oninput = update_helper;
-            mins.onchange = function() {
+            function reset_timeout() {
                 timeout = new Date(Date.now()).getTime() + 180000;
             }
+
+            mins.oninput = update_helper;
             update_helper();
+
+            mins.onchange = reset_timeout;
+            title.oninput = reset_timeout;
 
             window.setInterval(function() {
                 diff = parseInt((timeout - new Date(Date.now()).getTime()) / 1000);
