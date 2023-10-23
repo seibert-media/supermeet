@@ -29,13 +29,13 @@ html, body {
 }
 
 a, a:link, a:visited {
-    color: #000000;
+    color: #02091F;
     text-decoration: none;
-    border-bottom: 1px dotted #000000;
+    border-bottom: 1px dotted #02091F;
 }
 
 a:hover, a:focus, a:active {
-    border-bottom: 1px solid #000000;
+    border-bottom: 1px solid #02091F;
 }
 
 h1 {
@@ -114,7 +114,7 @@ input[type=text], input[type=range] {
 }
 
 .buttons a, .buttons a:link, .button a:visited, .buttons input {
-    background-color: #808080;
+    background-color: #262C76;
     border-radius: 5px;
     border: none;
     color: #FFFFFF;
