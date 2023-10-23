@@ -42,7 +42,7 @@ h1 {
     background-color: black;
     color: white;
     font-family: "Lato-Bold",sans-serif;
-    font-size: 30px;
+    font-size: 40px;
     left: 0;
     padding: 10px;
     position: fixed;
@@ -52,19 +52,20 @@ h1 {
 
 h2 {
     font-family: "Lato-Bold",sans-serif;
-    font-size: 50px;
-    margin-top: 50px;
+    font-size: 70px;
+    margin-top: 40px;
     padding: 10px;
 }
 
 h2 span {
+    font-family: "Lato-Bold",sans-serif;
     font-size: 30px;
     display: block;
     margin-bottom: 10px;
 }
 
 p {
-    font-size: 20px;
+    font-size: 30px;
     line-height: 30px;
 }
 
@@ -114,7 +115,7 @@ input[type=text], input[type=range] {
 }
 
 .buttons a, .buttons a:link, .button a:visited, .buttons input {
-    background-color: #808080;
+    background-color: #555555;
     border-radius: 5px;
     border: none;
     color: #FFFFFF;
