@@ -13,7 +13,9 @@
 
 {% block body %}
         <h1>{{ room.name }}</h1>
-        <div id="supermeet"></div>
+        <div id="content">
+            <div id="supermeet"></div>
+        </div>
         <script type="text/javascript">
             fetch_events();
             window.setInterval(fetch_events, 30000);

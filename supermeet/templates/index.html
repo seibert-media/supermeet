@@ -4,11 +4,13 @@
 
 {% block body %}
         <h1>Raumübersicht</h1>
-        <div id="overview">
-            <ul>
+        <div id="content">
+            <div id="overview">
+                <ul>
 {% for room in rooms %}
-                <li><a href="{{ room[1] }}">{{ room[0] }}</a></li>
+                    <li><a href="{{ room[1] }}">{{ room[0] }}</a></li>
 {% endfor %}
-            </ul>
+                </ul>
+            </div>
         </div>
 {% endblock %}

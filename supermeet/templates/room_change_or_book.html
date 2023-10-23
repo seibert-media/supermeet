@@ -11,30 +11,32 @@
 
 {% block body %}
         <h1>{{ room.name }}</h1>
-        <form method="post">
-            <fieldset>
-                <legend>Raum buchen oder Buchung ändern</legend>
+        <div id="content">
+            <form method="post">
+                <fieldset>
+                    <legend>Raum buchen oder Buchung ändern</legend>
 
-                <input type="hidden" name="event_id" value="{{ event_id }}">
+                    <input type="hidden" name="event_id" value="{{ event_id }}">
 {% if current_event %}
-                <h2>{{ current_event.summary }}</h2>
+                    <h2>{{ current_event.summary }}</h2>
 {% else %}
-                <h2>Neuer Termin</h2>
+                    <h2>Neuer Termin</h2>
 
-                <label for="input_title">Event-Titel</label>
-                <input type="text" name="input_title" id="input_title" value="Lokale Buchung über Supermeet"><br>
+                    <label for="input_title">Event-Titel</label>
+                    <input type="text" name="input_title" id="input_title" value="Lokale Buchung über Supermeet"><br>
 {% endif %}
 
-                <label for="input_minutes">Länge in Minuten</label>
-                <input type="range" min="10" max="{{ minutes_until_next_event }}" step="10" name="input_minutes" id="input_minutes" value="{{ slider_value }}"><br>
-                <span id="input_minutes_debug" class="info"></span><br>
+                    <label for="input_minutes">Länge in Minuten</label>
+                    <input type="range" min="10" max="{{ minutes_until_next_event }}" step="10" name="input_minutes" id="input_minutes" value="{{ slider_value }}"><br>
+                    <span id="input_minutes_debug" class="info"></span><br>
 
-                <p class="buttons">
-                    <input type="submit" value="Jetzt buchen">
-                    <a href="{{ url_for('room_view', room_id=room_id) }}">Zurück<span id="timeout"></span></a>
-                </p>
-            </fieldset>
-        </form>
+                    <p class="buttons">
+                        <input type="submit" value="Jetzt buchen">
+                        <a href="{{ url_for('room_view', room_id=room_id) }}">Zurück<span id="timeout"></span></a>
+                    </p>
+                </fieldset>
+            </form>
+        </div>
         <script type="text/javascript">
             mins = document.getElementById('input_minutes');
 

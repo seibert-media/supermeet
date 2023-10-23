@@ -6,6 +6,18 @@
     text-align: center;
 }
 
+html, body {
+    height: 100vh;
+    overflow: hidden;
+}
+
+#content {
+    align-items: center;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+}
+
 a, a:link, a:visited {
     color: #000000;
     text-decoration: none;
@@ -20,7 +32,11 @@ h1 {
     background-color: black;
     color: white;
     font-size: 30px;
+    left: 0;
     padding: 10px;
+    position: fixed;
+    right: 0;
+    top: 0;
 }
 
 h2 {
