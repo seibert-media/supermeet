@@ -39,7 +39,7 @@ function update_display() {
     } else if (num_booked > 0) {
         document.body.style.background = '#FFBF00';
     } else {
-        document.body.style.background = '#C5F85A';
+        document.body.style.background = '#008000';
     }
 
     document.getElementById('booked').innerHTML = booked;

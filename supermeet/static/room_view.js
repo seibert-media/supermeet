@@ -43,7 +43,7 @@ function update_display() {
     if (current) {
         document.body.style.background = '#FF4400';
     } else {
-        document.body.style.background = '#C5F85A';
+        document.body.style.background = '#008000';
     }
 
     document.getElementById('supermeet').innerHTML = out;
