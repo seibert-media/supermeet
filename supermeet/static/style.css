@@ -1,5 +1,15 @@
+@font-face {
+    font-family: "Lato-Medium";
+    src: url(Lato-Medium.ttf);
+}
+
+@font-face {
+    font-family: "Lato-Bold";
+    src: url(Lato-Bold.ttf);
+}
+
 * {
-    font-family: "Muli","Open Sans","OpenSans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "Lato-Medium",sans-serif;
     line-height: 1.2em;
     margin: 0;
     padding: 0;
@@ -31,6 +41,7 @@ a:hover, a:focus, a:active {
 h1 {
     background-color: black;
     color: white;
+    font-family: "Lato-Bold",sans-serif;
     font-size: 30px;
     left: 0;
     padding: 10px;
@@ -40,9 +51,10 @@ h1 {
 }
 
 h2 {
+    font-family: "Lato-Bold",sans-serif;
     font-size: 50px;
-    padding: 10px;
     margin-top: 50px;
+    padding: 10px;
 }
 
 h2 span {
