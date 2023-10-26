@@ -14,6 +14,7 @@ function get_current_event(events) {
     return null;
 }
 
+
 function get_next_event(events) {
     now = new Date(Date.now()).getTime()/1000;
     next_event_time = 0;
@@ -34,6 +35,7 @@ function get_next_event(events) {
     }
     return next_event;
 }
+
 
 function time_until(time) {
     now = new Date(Date.now()).getTime()/1000;
@@ -81,6 +83,7 @@ function time_until(time) {
     return 'in ' + value + ' ' + name;
 }
 
+
 function xhr_get(url, callback_func) {
     req = new XMLHttpRequest();
     req.timeout = 10000;
@@ -98,6 +101,14 @@ function xhr_get(url, callback_func) {
 }
 
 
+function _format_time(i) {
+    if (i < 10) {
+        i = "0" + i;
+    }
+    return i;
+}
+
+
 window.setInterval(function() {
     console.info('checking if GUI needs reloading because server has restarted');
 
@@ -109,3 +120,9 @@ window.setInterval(function() {
         }
     });
 }, 42000);
+
+
+window.setInterval(function() {
+    now = new Date(Date.now());
+    document.getElementById('clock').innerHTML = _format_time(now.getHours()) + ":" + _format_time(now.getMinutes());
+}, 5000);

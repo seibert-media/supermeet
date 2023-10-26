@@ -39,6 +39,7 @@ a:hover, a:focus, a:active {
 }
 
 h1 {
+    font-weight: bolder;
     background-color: black;
     color: white;
     font-family: "Lato-Bold",sans-serif;
@@ -48,6 +49,15 @@ h1 {
     position: fixed;
     right: 0;
     top: 0;
+}
+
+h1 span {
+    font-weight: normal;
+    font-family: "Lato-Medium",sans-serif;
+    display: block;
+    right: 10px;
+    top: 10px;
+    position:fixed;
 }
 
 h2 {
