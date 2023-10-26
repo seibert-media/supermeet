@@ -11,4 +11,8 @@ environ.setdefault('FLASK_SECRET', 'just-for-testing')
 
 from supermeet.web import app
 
-app.run(debug=True)
+app.run(
+    debug=True,
+    host="0.0.0.0",
+    threaded=True,
+)
