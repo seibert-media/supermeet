@@ -137,12 +137,9 @@ input[type=text], input[type=range] {
 }
 
 #avatar {
+    background-size: cover;
+    border-radius: 10px;
     bottom: 10px;
     left: 10px;
     position: fixed;
-}
-
-#avatar img {
-    max-height: 100px;
-    max-width: 100px;
 }

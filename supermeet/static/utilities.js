@@ -117,9 +117,12 @@ function load_avatar(email) {
     }
 
     current_avatar = email;
+    css = document.getElementById('avatar').style
 
     if (!email) {
-        document.getElementById('avatar').innerHTML = '';
+        css.background = none;
+        css.height = 0;
+        css.width = 0;
         return;
     }
 
@@ -127,9 +130,13 @@ function load_avatar(email) {
 
     xhr_get('/api/avatar/' + email + '/', function(event) {
         if (req.responseText) {
-            document.getElementById('avatar').innerHTML = '<img src="' + req.responseText + '">';
+            css.backgroundImage = 'url("' + req.responseText + '")';
+            css.height = '100px';
+            css.width = '100px';
         } else {
-            document.getElementById('avatar').innerHTML = '';
+            css.background = none;
+            css.height = 0;
+            css.width = 0;
         }
     });
 }
