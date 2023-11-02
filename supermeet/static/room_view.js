@@ -12,6 +12,7 @@ function update_display() {
     next = get_next_event(events);
 
     out = '';
+    avatar = ''
     if (current) {
         ends = new Date(current['end']).getTime();
 
@@ -27,9 +28,11 @@ function update_display() {
         }
         out += '<a href="' + booking_link + '">Buchung verändern</a>';
         out += '</p>';
+        avatar = current['creator'];
     } else if (next) {
         out += '<h2>' + next['title'] + '</h2>';
         out += '<p>startet ' + time_until(next['start']) + '</p>';
+        avatar = next['creator'];
     } else {
         out += '<p>Frei für mehr als 7 Tage</p>';
     }
@@ -47,6 +50,7 @@ function update_display() {
     }
 
     document.getElementById('supermeet').innerHTML = out;
+    load_avatar(avatar);
 }
 window.setInterval(update_display, 1000);
 

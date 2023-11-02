@@ -1,3 +1,5 @@
+current_avatar = null;
+
 function get_current_event(events) {
     now = new Date(Date.now()).getTime()/1000;
 
@@ -106,6 +108,30 @@ function _format_time(i) {
         i = "0" + i;
     }
     return i;
+}
+
+
+function load_avatar(email) {
+    if (current_avatar == email) {
+        return;
+    }
+
+    current_avatar = email;
+
+    if (!email) {
+        document.getElementById('avatar').innerHTML = '';
+        return;
+    }
+
+    console.info('got avatar request for ' + email);
+
+    xhr_get('/api/avatar/' + email + '/', function(event) {
+        if (req.responseText) {
+            document.getElementById('avatar').innerHTML = '<img src="' + req.responseText + '">';
+        } else {
+            document.getElementById('avatar').innerHTML = '';
+        }
+    });
 }
 
 
