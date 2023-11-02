@@ -24,6 +24,32 @@ class GoogleAPI:
     def _date(self, dt):
         return dt.replace(tzinfo=None).isoformat("T") + "Z"
 
+    def get_profile_picture_from_email(self, email):
+        try:
+            credentials = service_account.Credentials.from_service_account_file(
+                environ["APP_SECRETS"],
+                scopes=[
+                    "https://www.googleapis.com/auth/userinfo.profile",
+                ],
+            ).with_subject(email)
+
+            api = googleapiclient.discovery.build(
+                "people", "v1", credentials=credentials
+            )
+
+            result = (
+                api.people()
+                .get(resourceName="people/me", personFields="photos")
+                .execute()
+            )
+
+            for photo in result["photos"]:
+                if photo["metadata"]["source"]["type"].lower() == "profile":
+                    return photo["url"]
+            return None
+        except Exception:
+            return None
+
     def get_room(self, room_id):
         return self.api.calendars().get(calendarId=room_id).execute()
 
