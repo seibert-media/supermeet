@@ -1,4 +1,5 @@
 from . import (
+    api_avatar,
     api_room_events,
     api_rooms,
     app_startup,

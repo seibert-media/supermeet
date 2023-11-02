@@ -15,11 +15,12 @@ def api_room_events(room_id):
     events = {}
     for e in g.get_room_events(CONFIG["rooms"]["google"][room_id]["id"]):
         events[e["start"]["dateTime"]] = {
-            "title": e["summary"].strip(),
+            "creator": e["creator"]["email"],
             "description": e.get("description"),
-            "start": datetime.fromisoformat(e["start"]["dateTime"]).timestamp(),
             "end": datetime.fromisoformat(e["end"]["dateTime"]).timestamp(),
             "id": e["id"],
+            "start": datetime.fromisoformat(e["start"]["dateTime"]).timestamp(),
+            "title": e["summary"].strip(),
         }
 
     result = [v for k, v in sorted(events.items())]

@@ -135,3 +135,14 @@ input[type=text], input[type=range] {
     margin: 10px;
     padding: 10px;
 }
+
+#avatar {
+    bottom: 10px;
+    left: 10px;
+    position: fixed;
+}
+
+#avatar img {
+    max-height: 100px;
+    max-width: 100px;
+}
