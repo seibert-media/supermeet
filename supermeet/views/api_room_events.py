@@ -15,7 +15,7 @@ def api_room_events(room_id):
     events = {}
     for e in g.get_room_events(CONFIG["rooms"]["google"][room_id]["id"]):
         events[e["start"]["dateTime"]] = {
-            "avatar": g.get_profile_picture_from_email(e["creator"]["email"]),
+            "creator": e["creator"]["email"],
             "description": e.get("description"),
             "end": datetime.fromisoformat(e["end"]["dateTime"]).timestamp(),
             "id": e["id"],
