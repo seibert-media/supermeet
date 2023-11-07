@@ -1,4 +1,5 @@
 current_avatar = null;
+ONE_DAY = 1000 * 60 * 60 * 24; // milliseconds for one day
 
 function get_current_event(events) {
     now = new Date(Date.now()).getTime()/1000;
@@ -39,9 +40,29 @@ function get_next_event(events) {
 }
 
 
+function get_midnight(offset_days) {
+    date = new Date(Date.now() + offset_days*ONE_DAY);
+    date.setMilliseconds(0);
+    date.setSeconds(0);
+    date.setMinutes(0);
+    date.setHours(0);
+    return date.getTime()/1000;
+}
+
+
 function time_until(time) {
     now = new Date(Date.now()).getTime()/1000;
     until = new Date(time).getTime();
+
+    today_midnight = get_midnight(1);
+    tomorrow_midnight = get_midnight(2);
+    day_after_tomorrow_midnight = get_midnight(3);
+
+    if (until >= tomorrow_midnight && until < day_after_tomorrow_midnight) {
+        return 'übermorgen';
+    } else if (until >= today_midnight && until < tomorrow_midnight) {
+        return 'morgen';
+    }
 
     diff = until - now;
     single = 'einer';
