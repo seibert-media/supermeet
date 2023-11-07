@@ -39,7 +39,9 @@
         </div>
         <script type="text/javascript">
             mins = document.getElementById('input_minutes');
+{% if not current_event %}
             title = document.getElementById('input_title');
+{% endif %}
 
             function update_helper() {
                 document.getElementById('input_minutes_debug').innerHTML = mins.value + ' Minuten';
@@ -53,7 +55,9 @@
             update_helper();
 
             mins.onchange = reset_timeout;
+{% if not current_event %}
             title.oninput = reset_timeout;
+{% endif %}
 
             window.setInterval(function() {
                 diff = parseInt((timeout - new Date(Date.now()).getTime()) / 1000);
