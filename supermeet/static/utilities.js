@@ -141,7 +141,7 @@ function load_avatar(email) {
     css = document.getElementById('avatar').style
 
     if (!email) {
-        css.background = none;
+        css.background = null;
         css.height = 0;
         css.width = 0;
         return;
@@ -155,7 +155,7 @@ function load_avatar(email) {
             css.height = '100px';
             css.width = '100px';
         } else {
-            css.background = none;
+            css.background = null;
             css.height = 0;
             css.width = 0;
         }
