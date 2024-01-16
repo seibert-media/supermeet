@@ -8,29 +8,30 @@ function update_display() {
     }
 
     now = new Date(Date.now()).getTime()/1000;
-    booked = '';
-    available = '';
+    content = {};
     num_booked = 0;
-
 
     for (const[room, evts] of Object.entries(events)) {
         current = get_current_event(evts);
         next = get_next_event(evts);
+        tmp = '';
 
         if (current) {
-            booked += '<h2><span>' + room + '</span> ' + current['title'] + '</h2>';
-            booked += '<p>endet ' + time_until(current['end']) + '</p>';
+            tmp += '<h2><span>' + room + '</span> ' + current['title'] + '</h2>';
+            tmp += '<p>endet ' + time_until(current['end']) + '</p>';
             if (next) {
-                booked += '<p><span>' + next['title'] + '</span> startet ' + time_until(next['start']) + '</p>';
+                tmp += '<p><span>' + next['title'] + '</span> startet ' + time_until(next['start']) + '</p>';
             }
-
+            content[current['start'].toString() + room] = tmp;
             num_booked += 1;
         } else if (next) {
-            available += '<h2><span>' + room + '</span> ' + next['title'] + '</h2>';
-            available += '<p>startet ' + time_until(next['start']) + '</p>';
+            tmp += '<h2><span>' + room + '</span> ' + next['title'] + '</h2>';
+            tmp += '<p>startet ' + time_until(next['start']) + '</p>';
+            content[next['start'].toString() + room] = tmp;
         } else {
-            available += '<h2>' + room + '</h2>';
-            available += '<p>Frei für mehr als 7 Tage</p>';
+            tmp += '<h2>' + room + '</h2>';
+            tmp += '<p>Frei für mehr als 7 Tage</p>';
+            content[room] = tmp;
         }
     }
 
@@ -42,8 +43,14 @@ function update_display() {
         document.body.style.background = '#008000';
     }
 
-    document.getElementById('booked').innerHTML = booked;
-    document.getElementById('available').innerHTML = available;
+    real_content = '';
+    keys = Object.keys(content);
+    keys.sort()
+    for (const k of keys) {
+        real_content += content[k];
+    }
+
+    document.getElementById('supermeet').innerHTML = real_content;
 }
 window.setInterval(update_display, 1000);
 
