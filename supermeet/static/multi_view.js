@@ -27,7 +27,7 @@ function update_display() {
         } else if (next) {
             tmp += '<h2><span>' + room + '</span> ' + next['title'] + '</h2>';
             tmp += '<p>startet ' + time_until(next['start']) + '</p>';
-            content[next['end'].toString() + room] = tmp;
+            content[next['start'].toString() + room] = tmp;
         } else {
             tmp += '<h2>' + room + '</h2>';
             tmp += '<p>Frei für mehr als 7 Tage</p>';
