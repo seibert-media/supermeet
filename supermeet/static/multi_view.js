@@ -22,12 +22,12 @@ function update_display() {
             if (next) {
                 tmp += '<p><span>' + next['title'] + '</span> startet ' + time_until(next['start']) + '</p>';
             }
-            content[current['start'].toString() + room] = tmp;
+            content[current['end'].toString() + room] = tmp;
             num_booked += 1;
         } else if (next) {
             tmp += '<h2><span>' + room + '</span> ' + next['title'] + '</h2>';
             tmp += '<p>startet ' + time_until(next['start']) + '</p>';
-            content[next['start'].toString() + room] = tmp;
+            content[next['end'].toString() + room] = tmp;
         } else {
             tmp += '<h2>' + room + '</h2>';
             tmp += '<p>Frei für mehr als 7 Tage</p>';
