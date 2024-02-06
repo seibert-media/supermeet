@@ -1,4 +1,5 @@
 current_avatar = null;
+scroll_to_top_timer = null;
 ONE_DAY = 1000 * 60 * 60 * 24; // milliseconds for one day
 
 function get_current_event(events) {
@@ -161,6 +162,35 @@ function load_avatar(email) {
         }
     });
 }
+
+function start_timer_scroll_top(event) {
+    if (scroll_to_top_timer) {
+        return;
+    }
+    console.info('started timer to scroll to the top again');
+    scroll_to_top_timer = window.setTimeout(function() {
+        console.warning('scrolling to top due to timeout');
+        window.scrollTo({
+            behavior: 'smooth',
+            left: 0,
+            top: 0,
+        });
+    }, 30000);
+}
+
+
+function stop_timer_scroll_top(event) {
+    if (!scroll_to_top_timer) {
+        return;
+    }
+    console.info('stopped timer to scroll to the top again');
+    window.clearTimeout(scroll_to_top_timer);
+    scroll_to_top_timer = null;
+}
+
+
+window.addEventListener("scroll", stop_timer_scroll_top);
+window.addEventListener("scrollend", start_timer_scroll_top);
 
 
 window.setInterval(function() {
