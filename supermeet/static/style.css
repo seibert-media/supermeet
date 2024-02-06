@@ -22,7 +22,7 @@ html, body {
 }
 
 #content {
-    align-items: center;
+    align-items: safe center;
     display: flex;
     height: 100vh;
     justify-content: center;
@@ -117,7 +117,7 @@ input[type=text], input[type=range] {
 }
 
 #supermeet, #overview {
-    margin: 20px;
+    margin: 30px;
 }
 
 .buttons {
