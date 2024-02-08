@@ -20,11 +20,16 @@ html, body {
     height: 100vh;
 }
 
-#content {
-    align-items: safe center;
+#content-flex {
+    align-items: center;
     display: flex;
     height: 100vh;
     justify-content: center;
+    overflow: hidden;
+}
+
+#content-noflex {
+    padding-top: 60px;
 }
 
 a, a:link, a:visited {
@@ -44,6 +49,7 @@ h1 {
     font-family: "Lato-Bold",sans-serif;
     font-size: 40px;
     left: 0;
+    line-height: 40px;
     padding: 10px;
     position: fixed;
     right: 0;
