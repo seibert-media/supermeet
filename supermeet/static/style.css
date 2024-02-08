@@ -57,12 +57,14 @@ h1 {
 }
 
 h1 span {
-    font-weight: normal;
-    font-family: "Lato-Medium",sans-serif;
     display: block;
+    font-family: "Lato-Medium",sans-serif;
+    font-size: 40px;
+    font-weight: normal;
+    line-height: 40px;
+    position:fixed;
     right: 10px;
     top: 10px;
-    position:fixed;
 }
 
 h2 {
