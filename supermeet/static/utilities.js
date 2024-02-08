@@ -170,11 +170,7 @@ function start_timer_scroll_top(event) {
     console.info('started timer to scroll to the top again');
     scroll_to_top_timer = window.setTimeout(function() {
         console.warn('scrolling to top due to timeout');
-        window.scrollTo({
-            behavior: 'smooth',
-            left: 0,
-            top: 0,
-        });
+        window.scrollTo(0, 0);
     }, 30000);
 }
 
