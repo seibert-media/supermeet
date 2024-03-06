@@ -7,10 +7,10 @@
             app_startup = {{ app_startup }};
             rooms = {};
 {% for room in rooms %}
-            rooms["{{ room.name }}"] = "{{ url_for('api_room_events', room_id=room.id) }}";
+            rooms["{{ room.name }}"] = "{{ url_for('api_google_room_events', room_id=room.id) }}";
 {% endfor %}
         </script>
-        <script src="{{ url_for('static', filename='multi_view.js') }}"></script>
+        <script src="{{ url_for('static', filename='google_multi_view.js') }}"></script>
 {% endblock %}
 
 {% block body %}

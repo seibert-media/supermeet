@@ -5,10 +5,19 @@
 {% block head %}
         <script type="text/javascript">
             app_startup = {{ app_startup }};
-            api_room_events = "{{ url_for('api_room_events', room_id=room_id) }}";
-            booking_link = "{{ url_for('room_change_or_book', room_id=room_id) }}";
+{% if room_type == "google" %}
+            api_room_events = "{{ url_for('api_google_room_events', room_id=room_id) }}";
+            booking_link = "{{ url_for('google_room_change_or_book', room_id=room_id) }}";
+{% elif room_type == "anny" %}
+            api_room_events = "{{ url_for('api_anny_events', resource=room_id) }}";
+            booking_link = null;
+{% endif %}
         </script>
-        <script src="{{ url_for('static', filename='room_view.js') }}"></script>
+{% if room_type == "google" %}
+        <script src="{{ url_for('static', filename='google_view.js') }}"></script>
+{% elif room_type == "anny" %}
+        <script src="{{ url_for('static', filename='anny_view.js') }}"></script>
+{% endif %}
 {% endblock %}
 
 {% block body %}

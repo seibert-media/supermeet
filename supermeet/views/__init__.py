@@ -7,5 +7,5 @@ from . import (
     index,
     multi_view,
     google_room_change_or_book,
-    google_room_view,
+    room_view,
 )
