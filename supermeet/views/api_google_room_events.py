@@ -8,7 +8,7 @@ from ..web import app
 
 
 @app.route("/api/rooms/google/<room_id>/events/")
-def api_room_events(room_id):
+def api_google_room_events(room_id):
     if room_id not in CONFIG["rooms"]["google"]:
         abort(404)
     g = GoogleAPI()

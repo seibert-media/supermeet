@@ -8,7 +8,7 @@ from ..web import app
 
 
 @app.route("/room/<room_id>/update/", methods=["GET", "POST"])
-def room_change_or_book(room_id):
+def google_room_change_or_book(room_id):
     if room_id not in CONFIG["rooms"]["google"]:
         abort(404)
 

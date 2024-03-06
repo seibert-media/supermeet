@@ -5,7 +5,7 @@ from ..web import app
 
 
 @app.route("/room/<room_id>/")
-def room_view(room_id):
+def google_room_view(room_id):
     if room_id not in CONFIG["rooms"]["google"]:
         abort(404)
 

@@ -5,7 +5,7 @@ from ..web import app
 
 
 @app.route("/api/rooms/")
-def api_rooms():
+def api_google_rooms():
     rooms = []
 
     for identifier, room in CONFIG["rooms"]["google"].items():
