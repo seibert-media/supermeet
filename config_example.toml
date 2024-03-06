@@ -10,6 +10,13 @@ rooms = [
     "hq_veilchen",
 ]
 
+[rooms.anny.hq_testraum]
+name = "Testraum"
+resources = [
+    "81568",
+    "92924",
+]
+
 [rooms.google.hq_gaensebluemchen]
 name = "HQ Gänseblümchen"
 id = "c_18831qv13gjdqhmdl7ag6dglbrt1s@resource.calendar.google.com"
