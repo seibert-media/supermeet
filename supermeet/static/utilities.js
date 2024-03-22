@@ -59,10 +59,15 @@ function time_until(time) {
     tomorrow_midnight = get_midnight(2);
     day_after_tomorrow_midnight = get_midnight(3);
 
+    if (until >= today_midnight && until < day_after_tomorrow_midnight) {
+        d = new Date(time*1000);
+        time_str = d.getHours() + ':' + (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
+    }
+
     if (until >= tomorrow_midnight && until < day_after_tomorrow_midnight) {
-        return 'übermorgen';
+        return 'übermorgen ' + time_str + ' Uhr';
     } else if (until >= today_midnight && until < tomorrow_midnight) {
-        return 'morgen';
+        return 'morgen ' + time_str + ' Uhr';
     }
 
     diff = until - now;
