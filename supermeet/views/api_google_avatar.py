@@ -10,4 +10,4 @@ def api_google_avatar(email):
     g = GoogleAPI()
     avatar = g.get_profile_picture_from_email(email)
 
-    return avatar if avatar else ''
+    return avatar if avatar else ""

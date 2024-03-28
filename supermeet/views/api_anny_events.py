@@ -14,7 +14,10 @@ def api_anny_events(resource):
     a = AnnyAPI()
     events = {}
     for e in a.get_events():
-        if str(e['relationships']['resource']['data']['id']) not in CONFIG["rooms"]['anny'][resource]["resources"]:
+        if (
+            str(e["relationships"]["resource"]["data"]["id"])
+            not in CONFIG["rooms"]["anny"][resource]["resources"]
+        ):
             continue
         description = e["attributes"]["description"]
         if description in ("Flex-Buchung",):

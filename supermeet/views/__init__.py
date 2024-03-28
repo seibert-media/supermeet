@@ -4,8 +4,8 @@ from . import (
     api_google_room_events,
     api_google_rooms,
     app_startup,
+    google_room_change_or_book,
     index,
     multi_view,
-    google_room_change_or_book,
     room_view,
 )
