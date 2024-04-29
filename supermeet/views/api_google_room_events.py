@@ -14,14 +14,17 @@ def api_google_room_events(room_id):
     g = GoogleAPI()
     events = {}
     for e in g.get_room_events(CONFIG["rooms"]["google"][room_id]["id"]):
-        events[e["start"]["dateTime"]] = {
-            "creator": e["creator"]["email"],
-            "description": e.get("description"),
-            "end": datetime.fromisoformat(e["end"]["dateTime"]).timestamp(),
-            "id": e["id"],
-            "start": datetime.fromisoformat(e["start"]["dateTime"]).timestamp(),
-            "title": e["summary"].strip(),
-        }
+        try:
+            events[e["start"]["dateTime"]] = {
+                "creator": e["creator"]["email"],
+                "description": e.get("description"),
+                "end": datetime.fromisoformat(e["end"]["dateTime"]).timestamp(),
+                "id": e["id"],
+                "start": datetime.fromisoformat(e["start"]["dateTime"]).timestamp(),
+                "title": e["summary"].strip(),
+            }
+        except KeyError as e:
+            app.logger.exception('could not add event \'{e.get("id")}\' to list of events')
 
     result = [v for k, v in sorted(events.items())]
     return jsonify(result)
