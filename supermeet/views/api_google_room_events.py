@@ -21,7 +21,13 @@ def api_google_room_events(room_id):
                 "end": datetime.fromisoformat(e["end"]["dateTime"]).timestamp(),
                 "id": e["id"],
                 "start": datetime.fromisoformat(e["start"]["dateTime"]).timestamp(),
-                "title": e["summary"].strip(),
+                "title": e.get(
+                    "summary",
+                    e["creator"].get(
+                        "displayName",
+                        e["creator"]["email"],
+                    ),
+                ).strip(),
             }
         except KeyError as e:
             app.logger.exception('could not add event \'{e.get("id")}\' to list of events')
