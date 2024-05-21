@@ -15,10 +15,8 @@ def api_google_room_events(room_id):
     events = {}
     for e in g.get_room_events(CONFIG["rooms"]["google"][room_id]["id"]):
         try:
-            if e.get("summarý") and e.get("visibility") not in (
-                "private",
-                "confidential",
-            ):
+            is_confidential = e.get('visibility') in ('private', 'confidential')
+            if e.get("summary") and not is_confidential:
                 title = e["summary"]
             elif e["organizer"].get("displayName"):
                 title = e["organizer"]["displayName"]
@@ -26,9 +24,7 @@ def api_google_room_events(room_id):
                 title = e["organizer"]["email"]
             events[e["start"]["dateTime"]] = {
                 "creator": e["organizer"]["email"],
-                "description": e.get("description")
-                if e.get("visibility") not in ("private", "confidential")
-                else "",
+                "description": e.get("description") if not is_confidential else "",
                 "end": datetime.fromisoformat(e["end"]["dateTime"]).timestamp(),
                 "id": e["id"],
                 "start": datetime.fromisoformat(e["start"]["dateTime"]).timestamp(),
