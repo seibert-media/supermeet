@@ -9,7 +9,7 @@
             api_room_events = "{{ url_for('api_google_room_events', room_id=room_id) }}";
             booking_link = "{{ url_for('google_room_change_or_book', room_id=room_id) }}";
 {% elif room_type == "anny" %}
-            api_room_events = "{{ url_for('api_anny_events', resource=room_id) }}";
+            api_room_events = "{{ url_for('api_anny_details', resource=room_id) }}";
             booking_link = null;
 {% endif %}
         </script>
@@ -21,7 +21,14 @@
 {% endblock %}
 
 {% block body %}
-        <h1>{{ room.name }} <span id="clock"></span></h1>
+        <h1>
+{% if room_type == "google" %}
+            {{ room.name }}
+{% elif room_type == "anny" %}
+            <span id="room_name">{{ room_id }}</span>
+{% endif %}
+            <span id="clock"></span>
+        </h1>
         <div id="content-flex">
             <div id="supermeet"></div>
         </div>

@@ -57,7 +57,7 @@ h1 {
     top: 0;
 }
 
-h1 span {
+h1 #clock {
     display: block;
     font-family: "Lato-Medium",sans-serif;
     font-size: 40px;
