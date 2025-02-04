@@ -15,7 +15,7 @@ def api_google_room_events(room_id):
     events = {}
     for e in g.get_room_events(CONFIG["rooms"]["google"][room_id]["id"]):
         try:
-            is_confidential = e.get('visibility') in ('private', 'confidential')
+            is_confidential = e.get("visibility") in ("private", "confidential")
             if e.get("summary") and not is_confidential:
                 title = e["summary"]
             elif e["organizer"].get("displayName"):

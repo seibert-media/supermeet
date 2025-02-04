@@ -163,3 +163,5 @@ cython_debug/
 # Supermeet configs
 config.toml
 serviceaccount.json
+.direnv
+.envrc
