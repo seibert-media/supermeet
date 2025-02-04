@@ -7,8 +7,6 @@ from . import CONFIG
 
 class AnnyAPI:
     def __init__(self):
-        self.account_id = CONFIG["anny"]["account_id"]
-
         self._resources = {}
         self._last_resource_get = datetime.now() - timedelta(days=1)
 
