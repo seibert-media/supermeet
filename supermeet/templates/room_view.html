@@ -1,6 +1,12 @@
 {% extends "layout.html" %}
 
-{% block title %}{{ room.name }}{% endblock %}
+{% block title %}
+{% if room_type == "google" %}
+            {{ room.name }}
+{% elif room_type == "anny" %}
+            {{ room_id }}
+{% endif %}
+{% endblock %}
 
 {% block head %}
         <script type="text/javascript">
