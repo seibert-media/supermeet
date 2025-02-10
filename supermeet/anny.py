@@ -51,7 +51,7 @@ class AnnyAPI:
                         "name"
                     ]
                 else:
-                    resources.setdefault(item_id, {})
+                    resources.setdefault(item_id, {}).setdefault("children", {})
                     resources[item_id]["name"] = item["attributes"]["name"]
                     resources[item_id]["description"] = item["attributes"][
                         "description"
