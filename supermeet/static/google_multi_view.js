@@ -7,7 +7,6 @@ function update_display() {
         return;
     }
 
-    now = new Date(Date.now()).getTime()/1000;
     content = {};
     num_booked = 0;
 

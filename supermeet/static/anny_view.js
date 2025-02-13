@@ -9,8 +9,7 @@ function update_display() {
 
     document.getElementById("room_name").innerHTML = room_info['name'];
 
-    now = new Date(Date.now()).getTime()/1000;
-    out = '';
+    out = room_info['description'];
     num_booked = 0;
 
     for (i in room_info['children']) {
