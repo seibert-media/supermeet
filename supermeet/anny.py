@@ -71,24 +71,28 @@ class AnnyAPI:
         if until is None:
             until = start + timedelta(days=14)
 
-        resource_filter = ""
-        if resources is not None:
-            resource_filter = (
-                f"&filter[resources]={','.join([str(i) for i in resources])}"
-            )
+        if resources is None:
+            resources = [None]
 
         all_events = []
 
-        events = self._paginated_get(
-            "bookings?include=resource&filter[end_date]={end}&filter[start_date]={start}{resource_filter}".format(
-                start=start.isoformat()[:19],
-                end=until.isoformat()[:19],
-                resource_filter=resource_filter,
+        for resource in resources:
+
+            resource_filter = ""
+            if resource:
+                resource_filter += f"&filter[resources]={resource}"
+
+            events = self._paginated_get(
+                "bookings?include=resource&filter[end_date]={end}&filter[start_date]={start}{resource_filter}".format(
+                    start=start.isoformat()[:19],
+                    end=until.isoformat()[:19],
+                    resource_filter=resource_filter,
+                )
             )
-        )
-        for booking in events:
-            if booking["attributes"]["status"] in ("accepted", "requested", "reserved"):
-                all_events.append(booking)
+            for booking in events:
+                if booking["attributes"]["status"] in ("accepted", "requested", "reserved"):
+                    all_events.append(booking)
+
         return all_events
 
 
