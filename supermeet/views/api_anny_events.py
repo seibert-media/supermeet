@@ -46,11 +46,18 @@ def api_anny_details(resource):
             resource_id = int(e["relationships"]["resource"]["data"]["id"])
         except KeyError:
             continue
+
         if resource_id not in child_events:
             continue
+
         description = e["attributes"]["description"]
         if description in ("Flex-Buchung",):
             description = e["attributes"]["note"].splitlines()[0]
+
+        if e["attributes"].get("is_series_master"):
+            # ignore parent of series bookings
+            continue
+
         child_events[resource_id][e["attributes"]["start_date"]] = {
             "end": datetime.fromisoformat(e["attributes"]["end_date"]).timestamp(),
             "id": e["id"],
