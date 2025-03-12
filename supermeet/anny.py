@@ -13,6 +13,7 @@ class AnnyAPI:
         self.session = Session()
         self.session.headers = {
             "Authorization": f"Bearer {CONFIG.get('anny_api_key')}",
+            "Accept": "application/json",
         }
 
     def _paginated_get(self, api_endpoint):
@@ -77,7 +78,6 @@ class AnnyAPI:
         all_events = []
 
         for resource in resources:
-
             resource_filter = ""
             if resource:
                 resource_filter += f"&filter[resources]={resource}"
