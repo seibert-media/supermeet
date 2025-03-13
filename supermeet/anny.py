@@ -13,7 +13,6 @@ class AnnyAPI:
         self.session = Session()
         self.session.headers = {
             "Authorization": f"Bearer {CONFIG.get('anny_api_key')}",
-            "Accept": "application/json",
         }
 
     def _paginated_get(self, api_endpoint):
