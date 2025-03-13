@@ -59,9 +59,9 @@ def api_anny_details(resource):
             continue
 
         child_events[resource_id][e["attributes"]["start_date"]] = {
-            "end": datetime.fromisoformat(e["attributes"]["end_date"]).timestamp(),
+            "end": int(datetime.fromisoformat(e["attributes"]["end_date"]).timestamp()),
             "id": e["id"],
-            "start": datetime.fromisoformat(e["attributes"]["start_date"]).timestamp(),
+            "start": int(datetime.fromisoformat(e["attributes"]["start_date"]).timestamp()),
             "title": description,
         }
 
