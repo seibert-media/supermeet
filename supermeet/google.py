@@ -55,7 +55,7 @@ class GoogleAPI:
 
     def get_room_events(self, room_id, start=None, until=None):
         if start is None:
-            start = datetime.utcnow()
+            start = datetime.utcnow() - timedelta(hours=1)
 
         if until is None:
             until = start + timedelta(days=14)
