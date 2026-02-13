@@ -89,7 +89,11 @@ class AnnyAPI:
                 )
             )
             for booking in events:
-                if booking["attributes"]["status"] in ("accepted", "requested", "reserved"):
+                if booking["attributes"]["status"] in (
+                    "accepted",
+                    "requested",
+                    "reserved",
+                ):
                     all_events.append(booking)
 
         return all_events

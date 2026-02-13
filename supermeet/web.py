@@ -16,7 +16,7 @@ if environ.get("SENTRY_DSN"):
     sentry_sdk.init(
         dsn=environ["SENTRY_DSN"],
         send_default_pii=True,
-        integrations = [
+        integrations=[
             FlaskIntegration(
                 transaction_style="url",
             ),

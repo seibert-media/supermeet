@@ -2,7 +2,6 @@ from datetime import datetime, timedelta
 from os import environ
 
 import googleapiclient.discovery
-
 from google.oauth2 import service_account
 
 from . import CONFIG
@@ -85,7 +84,10 @@ class GoogleAPI:
 
                 if event.get("status") == "confirmed":
                     room_accepted = False
-                    if event.get("attendees") and event.get('organizer', {}).get('email') != room_id:
+                    if (
+                        event.get("attendees")
+                        and event.get("organizer", {}).get("email") != room_id
+                    ):
                         for attendee in event["attendees"]:
                             if attendee.get("email") == room_id:
                                 if attendee.get("responseStatus") == "accepted":

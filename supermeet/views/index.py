@@ -11,13 +11,9 @@ def index():
         rooms.append((multi["name"], url_for("multi_view", multi_id=identifier)))
 
     for identifier, room in CONFIG["rooms"]["google"].items():
-        rooms.append(
-            (room["name"], url_for("room_view", room_id=identifier))
-        )
+        rooms.append((room["name"], url_for("room_view", room_id=identifier)))
 
     for identifier, room in CONFIG["rooms"]["anny"].items():
-        rooms.append(
-            (identifier, url_for("room_view", room_id=identifier))
-        )
+        rooms.append((identifier, url_for("room_view", room_id=identifier)))
 
     return render_template("index.html", rooms=rooms)
