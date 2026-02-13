@@ -22,12 +22,23 @@ def api_google_room_events(room_id):
                 title = e["organizer"]["displayName"]
             else:
                 title = e["organizer"]["email"]
-            events[e["start"]["dateTime"]] = {
+
+            if isinstance(e["start"], dict):
+                start = int(datetime.fromisoformat(e["start"]["dateTime"]).timestamp())
+            else:
+                start = int(e["start"])
+
+            if isinstance(e["end"], dict):
+                end = int(datetime.fromisoformat(e["end"]["dateTime"]).timestamp())
+            else:
+                end = int(e["end"])
+
+            events[start] = {
                 "creator": e["organizer"]["email"],
                 "description": e.get("description") if not is_confidential else "",
-                "end": int(datetime.fromisoformat(e["end"]["dateTime"]).timestamp()),
+                "end": end,
                 "id": e["id"],
-                "start": int(datetime.fromisoformat(e["start"]["dateTime"]).timestamp()),
+                "start": start,
                 "title": title.strip(),
             }
         except KeyError as e:
