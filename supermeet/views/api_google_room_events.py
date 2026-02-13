@@ -23,8 +23,19 @@ def api_google_room_events(room_id):
             else:
                 title = e["organizer"]["email"]
 
-            start = int(datetime.fromisoformat(e["start"]["dateTime"]).timestamp())
-            end = int(datetime.fromisoformat(e["end"]["dateTime"]).timestamp())
+            if e["start"].get("dateTime"):
+                start = int(datetime.fromisoformat(e["start"]["dateTime"]).timestamp())
+            elif e["start"].get("date"):
+                start = int(datetime.fromisoformat(e["start"]["date"]).timestamp())
+            else:
+                raise ValueError(f"could not figure out start time: {e['start']!r}")
+
+            if e["end"].get("dateTime"):
+                end = int(datetime.fromisoformat(e["end"]["dateTime"]).timestamp())
+            elif e["end"].get("date"):
+                end = int(datetime.fromisoformat(e["end"]["date"]).timestamp())
+            else:
+                raise ValueError(f"could not figure out end time: {e['end']!r}")
 
             events[start] = {
                 "creator": e["organizer"]["email"],
