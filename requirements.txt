@@ -1,3 +1,4 @@
 Flask~=3.1.0
 google-api-python-client~=2.160.0
 rtoml ; python_version<'3.11'
+sentry-sdk
