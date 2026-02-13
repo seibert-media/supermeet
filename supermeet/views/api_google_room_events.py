@@ -41,7 +41,7 @@ def api_google_room_events(room_id):
                 "start": start,
                 "title": title.strip(),
             }
-        except KeyError as e:
+        except KeyError:
             app.logger.exception(
                 "could not add event '{e.get(\"id\")}' to list of events"
             )

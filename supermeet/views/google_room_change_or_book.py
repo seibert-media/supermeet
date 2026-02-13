@@ -37,7 +37,7 @@ def google_room_change_or_book(room_id):
                     current_event["id"],
                     g._date(now),
                 )
-            except Exception as e:
+            except Exception:
                 app.logger.exception(
                     "failed changing end time for event {} in calendar {}".format(
                         current_event["id"], room_id
@@ -58,7 +58,7 @@ def google_room_change_or_book(room_id):
                     event_id,
                     g._date(new_end),
                 )
-            except Exception as e:
+            except Exception:
                 app.logger.exception(
                     "failed changing end time for event {} in calendar {}".format(
                         current_event["id"], room_id
@@ -72,7 +72,7 @@ def google_room_change_or_book(room_id):
                     g._date(now),
                     g._date(new_end),
                 )
-            except Exception as e:
+            except Exception:
                 app.logger.exception(
                     "failed creating event in calendar {}".format(room_id)
                 )
