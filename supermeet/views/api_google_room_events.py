@@ -23,15 +23,8 @@ def api_google_room_events(room_id):
             else:
                 title = e["organizer"]["email"]
 
-            if isinstance(e["start"], dict):
-                start = int(datetime.fromisoformat(e["start"]["dateTime"]).timestamp())
-            else:
-                start = int(e["start"])
-
-            if isinstance(e["end"], dict):
-                end = int(datetime.fromisoformat(e["end"]["dateTime"]).timestamp())
-            else:
-                end = int(e["end"])
+            start = int(datetime.fromisoformat(e["start"]["dateTime"]).timestamp())
+            end = int(datetime.fromisoformat(e["end"]["dateTime"]).timestamp())
 
             events[start] = {
                 "creator": e["organizer"]["email"],
@@ -43,7 +36,7 @@ def api_google_room_events(room_id):
             }
         except KeyError:
             app.logger.exception(
-                "could not add event '{e.get(\"id\")}' to list of events"
+                f"could not add event '{e.get('id')}' to list of events"
             )
 
     result = [v for k, v in sorted(events.items())]

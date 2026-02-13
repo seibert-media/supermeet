@@ -76,6 +76,13 @@ class GoogleAPI:
             )
             page_token = events.get("nextPageToken")
             for event in events.get("items", []):
+                if not event.get("start") or not event.get("end"):
+                    # We've seen this happening on events where the time was
+                    # set to "Free" instead of "Busy", but i actually don't
+                    # have any clue on why and when this is happening. Just
+                    # ignore these events now, after all we can't handle these.
+                    continue
+
                 if event.get("status") == "confirmed":
                     room_accepted = False
                     if event.get("attendees") and event.get('organizer', {}).get('email') != room_id:
