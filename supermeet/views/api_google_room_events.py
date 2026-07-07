@@ -43,7 +43,6 @@ def api_google_room_events(room_id):
 
             events[start] = {
                 "creator": e["organizer"]["email"],
-                "description": e.get("description") if not is_confidential else "",
                 "end": end,
                 "id": e["id"],
                 "start": start,
