@@ -28,11 +28,11 @@ function update_display() {
         }
         out += '<a href="' + booking_link + '">Buchung verändern</a>';
         out += '</p>';
-        avatar = current['creator'];
+        avatar = current['creator_avatar'];
     } else if (next) {
         out += '<h2>' + next['title'] + '</h2>';
         out += '<p>startet ' + time_until(next['start']) + '</p>';
-        avatar = next['creator'];
+        avatar = next['creator_avatar'];
     } else {
         out += '<p>Frei für mehr als 7 Tage</p>';
     }

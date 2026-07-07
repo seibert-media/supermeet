@@ -6,6 +6,54 @@ from google.oauth2 import service_account
 
 from . import CONFIG
 
+_PROFILE_CACHE = {}
+_PROFILE_CACHE_TTL = 86400
+
+
+def _profile_from_email(email):
+    now = datetime.utcnow().timestamp()
+    cached = _PROFILE_CACHE.get(email)
+    if cached and cached[0] > now:
+        return cached[1]
+
+    profile = {"name": None, "avatar": None}
+    try:
+        credentials = service_account.Credentials.from_service_account_file(
+            environ["APP_SECRETS"],
+            scopes=[
+                "https://www.googleapis.com/auth/userinfo.profile",
+            ],
+        ).with_subject(email)
+
+        api = googleapiclient.discovery.build("people", "v1", credentials=credentials)
+
+        result = (
+            api.people()
+            .get(resourceName="people/me", personFields="names,photos")
+            .execute()
+        )
+
+        for entry in result.get("names", []):
+            if (
+                entry.get("metadata", {}).get("source", {}).get("type", "").lower()
+                == "profile"
+            ):
+                profile["name"] = entry.get("displayName")
+                break
+
+        for photo in result.get("photos", []):
+            if (
+                photo.get("metadata", {}).get("source", {}).get("type", "").lower()
+                == "profile"
+            ):
+                profile["avatar"] = photo.get("url")
+                break
+    except Exception:
+        pass
+
+    _PROFILE_CACHE[email] = (now + _PROFILE_CACHE_TTL, profile)
+    return profile
+
 
 class GoogleAPI:
     def __init__(self):
@@ -23,31 +71,8 @@ class GoogleAPI:
     def _date(self, dt):
         return dt.replace(tzinfo=None).isoformat("T") + "Z"
 
-    def get_profile_picture_from_email(self, email):
-        try:
-            credentials = service_account.Credentials.from_service_account_file(
-                environ["APP_SECRETS"],
-                scopes=[
-                    "https://www.googleapis.com/auth/userinfo.profile",
-                ],
-            ).with_subject(email)
-
-            api = googleapiclient.discovery.build(
-                "people", "v1", credentials=credentials
-            )
-
-            result = (
-                api.people()
-                .get(resourceName="people/me", personFields="photos")
-                .execute()
-            )
-
-            for photo in result["photos"]:
-                if photo["metadata"]["source"]["type"].lower() == "profile":
-                    return photo["url"]
-            return None
-        except Exception:
-            return None
+    def get_profile_from_email(self, email):
+        return _profile_from_email(email)
 
     def get_room(self, room_id):
         return self.api.calendars().get(calendarId=room_id).execute()

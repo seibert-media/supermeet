@@ -138,34 +138,24 @@ function _format_time(i) {
 }
 
 
-function load_avatar(email) {
-    if (current_avatar == email) {
+function load_avatar(url) {
+    if (current_avatar == url) {
         return;
     }
 
-    current_avatar = email;
+    current_avatar = url;
     css = document.getElementById('avatar').style
 
-    if (!email) {
+    if (!url) {
         css.background = null;
         css.height = 0;
         css.width = 0;
         return;
     }
 
-    console.info('got avatar request for ' + email);
-
-    xhr_get('/api/avatar/' + email + '/', function(event) {
-        if (req.responseText) {
-            css.backgroundImage = 'url("' + req.responseText + '")';
-            css.height = '100px';
-            css.width = '100px';
-        } else {
-            css.background = null;
-            css.height = 0;
-            css.width = 0;
-        }
-    });
+    css.backgroundImage = 'url("' + url + '")';
+    css.height = '100px';
+    css.width = '100px';
 }
 
 function start_timer_scroll_top(event) {
