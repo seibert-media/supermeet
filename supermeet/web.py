@@ -29,4 +29,4 @@ if not app.debug:
     app.logger.addHandler(stream_handler)
 
 
-from .views import *
+from . import views  # noqa: F401
