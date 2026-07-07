@@ -7,8 +7,8 @@ function update_display() {
         return;
     }
 
-    content = {};
-    num_booked = 0;
+    free = [];
+    occupied = [];
 
     for (const[room, evts] of Object.entries(events)) {
         current = get_current_event(evts);
@@ -21,32 +21,32 @@ function update_display() {
             if (next) {
                 tmp += '<p><span>' + next['title'] + '</span> startet ' + time_until(next['start']) + '</p>';
             }
-            content[current['end'].toString() + room] = tmp;
-            num_booked += 1;
+            occupied.push({sort_key: new Date(current['end']).getTime(), content: tmp});
         } else if (next) {
             tmp += '<h2><span>' + room + '</span> ' + next['title'] + '</h2>';
             tmp += '<p>startet ' + time_until(next['start']) + '</p>';
-            content[next['start'].toString() + room] = tmp;
+            free.push({sort_key: new Date(next['start']).getTime(), content: tmp});
         } else {
             tmp += '<h2>' + room + '</h2>';
             tmp += '<p>Frei für mehr als 7 Tage</p>';
-            content[room] = tmp;
+            free.push({sort_key: Infinity, content: tmp});
         }
     }
 
-    if (num_booked == Object.keys(rooms).length) {
+    if (occupied.length == Object.keys(rooms).length) {
         document.body.style.background = '#FF4400';
-    } else if (num_booked > 0) {
+    } else if (occupied.length > 0) {
         document.body.style.background = '#FFBF00';
     } else {
         document.body.style.background = '#008000';
     }
 
+    free.sort((a, b) => b.sort_key - a.sort_key);
+    occupied.sort((a, b) => a.sort_key - b.sort_key);
+
     real_content = '';
-    keys = Object.keys(content);
-    keys.sort()
-    for (const k of keys) {
-        real_content += content[k];
+    for (const item of free.concat(occupied)) {
+        real_content += item.content;
     }
 
     document.getElementById('supermeet').innerHTML = real_content;
