@@ -87,7 +87,9 @@ def google_room_change_or_book(room_id):
     slider_value = 60
     if current_event:
         slider_value = int(
-            (datetime.fromisoformat(current_event["end"]["dateTime"]) - now).total_seconds()
+            (
+                datetime.fromisoformat(current_event["end"]["dateTime"]) - now
+            ).total_seconds()
             / 60
         )
 

@@ -19,11 +19,9 @@ def api_google_room_events(room_id):
             organizer_profile = g.get_profile_from_email(organizer_email)
 
             is_confidential = e.get("visibility") in ("private", "confidential")
-            if (
-                e.get("summary")
-                and not is_confidential
-                and not CONFIG["rooms"]["google"][room_id].get("force_anonymize", False)
-            ):
+            if CONFIG["rooms"]["google"][room_id].get("force_anonymize", False):
+                title = "Belegt"
+            elif e.get("summary") and not is_confidential:
                 title = e["summary"]
             elif e["organizer"].get("displayName"):
                 title = e["organizer"]["displayName"]
