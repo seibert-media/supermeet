@@ -15,20 +15,25 @@ def api_google_room_events(room_id):
     events = {}
     for e in g.get_room_events(CONFIG["rooms"]["google"][room_id]["id"]):
         try:
-            organizer_email = e["organizer"]["email"]
-            organizer_profile = g.get_profile_from_email(organizer_email)
+            organizer_email = e.get("organizer", {}).get("email")
+            if organizer_email:
+                organizer_profile = g.get_profile_from_email(organizer_email)
+            else:
+                organizer_profile = {}
 
             is_confidential = e.get("visibility") in ("private", "confidential")
             if CONFIG["rooms"]["google"][room_id].get("force_anonymize", False):
                 title = "Belegt"
             elif e.get("summary") and not is_confidential:
                 title = e["summary"]
-            elif e["organizer"].get("displayName"):
+            elif e.get("organizer", {}).get("displayName"):
                 title = e["organizer"]["displayName"]
-            elif organizer_profile["name"]:
+            elif organizer_profile and organizer_profile.get("name"):
                 title = organizer_profile["name"]
-            else:
+            elif organizer_email:
                 title = organizer_email
+            else:
+                title = "Belegt"
 
             if e["start"].get("dateTime"):
                 start = int(datetime.fromisoformat(e["start"]["dateTime"]).timestamp())
@@ -46,7 +51,7 @@ def api_google_room_events(room_id):
 
             events[start] = {
                 "creator": organizer_email,
-                "creator_avatar": organizer_profile["avatar"],
+                "creator_avatar": organizer_profile.get("avatar"),
                 "end": end,
                 "id": e["id"],
                 "start": start,
@@ -54,7 +59,7 @@ def api_google_room_events(room_id):
             }
         except KeyError:
             app.logger.exception(
-                f"could not add event '{e.get('id')}' to list of events"
+                f"{room_id}: could not add event '{e.get('id')}' to list of events"
             )
 
     result = [v for k, v in sorted(events.items())]
