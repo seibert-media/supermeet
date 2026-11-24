@@ -45,17 +45,34 @@ def google_room_change_or_book(room_id):
                 )
             return redirect(url_for("room_view", room_id=room_id))
 
+    # limit this to 8 hours. If you need the room for longer, you have
+    # to book in google calendar.
+    minutes_until_next_event = min(
+        int((next_event_date - now).total_seconds() / 60), 8 * 60
+    )
+
     event_id = request.form.get("event_id")
-    if current_event and event_id and current_event["id"] != event_id:
-        abort(400)
 
     if request.method == "POST":
-        new_end = now + timedelta(minutes=int(request.form["input_minutes"]))
-        if event_id:
+        # only ever change the event which is currently running, and only
+        # create a new one if the room is free
+        if current_event and event_id != current_event["id"]:
+            abort(400)
+        if not current_event and event_id:
+            abort(400)
+
+        try:
+            minutes = int(request.form["input_minutes"])
+        except (KeyError, ValueError):
+            abort(400)
+        minutes = max(0, min(minutes, minutes_until_next_event))
+
+        new_end = now + timedelta(minutes=minutes)
+        if current_event:
             try:
                 g.patch_room_event_end_time(
                     CONFIG["rooms"]["google"][room_id]["id"],
-                    event_id,
+                    current_event["id"],
                     g._date(new_end),
                 )
             except Exception:
@@ -77,12 +94,6 @@ def google_room_change_or_book(room_id):
                     "failed creating event in calendar {}".format(room_id)
                 )
         return redirect(url_for("room_view", room_id=room_id))
-
-    # limit this to 8 hours. If you need the room for longer, you have
-    # to book in google calendar.
-    minutes_until_next_event = min(
-        int((next_event_date - now).total_seconds() / 60), 8 * 60
-    )
 
     slider_value = 60
     if current_event:
