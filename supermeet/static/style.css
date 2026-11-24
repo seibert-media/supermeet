@@ -132,6 +132,10 @@ input[type=text], input[type=range] {
     margin-top: 30px;
 }
 
+.buttons form {
+    display: inline;
+}
+
 .buttons a, .buttons a:link, .button a:visited, .buttons input {
     background-color: #555555;
     border-radius: 5px;

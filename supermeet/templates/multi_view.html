@@ -7,7 +7,7 @@
             app_startup = {{ app_startup }};
             rooms = {};
 {% for room in rooms %}
-            rooms["{{ room.name }}"] = "{{ url_for('api_google_room_events', room_id=room.id) }}";
+            rooms[{{ room.name|tojson }}] = "{{ url_for('api_google_room_events', room_id=room.id) }}";
 {% endfor %}
         </script>
         <script src="{{ url_for('static', filename='google_multi_view.js') }}"></script>
@@ -22,8 +22,8 @@
         <script type="text/javascript">
 {% for room in rooms %}
             window.setTimeout(function() {
-                fetch_events("{{ room.name }}");
-                window.setInterval(fetch_events, 30000, "{{ room.name }}");
+                fetch_events({{ room.name|tojson }});
+                window.setInterval(fetch_events, 30000, {{ room.name|tojson }});
             }, {{ loop.index }}000);
 {% endfor %}
         </script>

@@ -15,16 +15,21 @@ def api_google_room_events(room_id):
     events = {}
     for e in g.get_room_events(CONFIG["rooms"]["google"][room_id]["id"]):
         try:
+            force_anonymize = CONFIG["rooms"]["google"][room_id].get(
+                "force_anonymize", False
+            )
             organizer_email = e.get("organizer", {}).get("email")
-            if organizer_email:
+            if organizer_email and not force_anonymize:
                 organizer_profile = g.get_profile_from_email(organizer_email)
             else:
                 organizer_profile = {}
 
+            # private events only show the avatar, so colleagues know whom
+            # to contact if the room is booked but empty
             is_confidential = e.get("visibility") in ("private", "confidential")
-            if CONFIG["rooms"]["google"][room_id].get("force_anonymize", False):
+            if force_anonymize or is_confidential:
                 title = "Belegt"
-            elif e.get("summary") and not is_confidential:
+            elif e.get("summary"):
                 title = e["summary"]
             elif e.get("organizer", {}).get("displayName"):
                 title = e["organizer"]["displayName"]
@@ -50,7 +55,6 @@ def api_google_room_events(room_id):
                 raise ValueError(f"could not figure out end time: {e['end']!r}")
 
             events[start] = {
-                "creator": organizer_email,
                 "creator_avatar": organizer_profile.get("avatar"),
                 "end": end,
                 "id": e["id"],

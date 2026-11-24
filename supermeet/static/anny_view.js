@@ -2,14 +2,19 @@ room_info = null;
 
 
 function update_display() {
+    container = document.getElementById('supermeet');
+
     if (!room_info) {
-        document.getElementById('supermeet').innerHTML = '<p>Warte auf Kalenderdaten ...</p>';
+        container.replaceChildren(make_element('p', 'Warte auf Kalenderdaten ...'));
         return;
     }
 
-    document.getElementById("room_name").innerHTML = room_info['name'];
+    document.getElementById("room_name").textContent = room_info['name'];
 
-    out = room_info['description'];
+    // the description is maintained as html in anny by its admins
+    description = make_element('div');
+    description.innerHTML = room_info['description'];
+    out = [description];
     num_booked = 0;
 
     for (i in room_info['children']) {
@@ -19,18 +24,18 @@ function update_display() {
         next = get_next_event(child['events']);
 
         if (current) {
-            out += '<h2><span>' + child['name'] + '</span> ' + current['title'] + '</h2>';
-            out += '<p>endet ' + time_until(current['end']) + '</p>';
+            out.push(make_element_with_span('h2', child['name'], current['title']));
+            out.push(make_element('p', 'endet ' + time_until(current['end'])));
             if (next) {
-                out += '<p><span>' + next['title'] + '</span> startet ' + time_until(next['start']) + '</p>';
+                out.push(make_element_with_span('p', next['title'], 'startet ' + time_until(next['start'])));
             }
             num_booked += 1;
         } else if (next) {
-            out += '<h2><span>' + child['name'] + '</span> ' + next['title'] + '</h2>';
-            out += '<p>startet ' + time_until(next['start']) + '</p>';
+            out.push(make_element_with_span('h2', child['name'], next['title']));
+            out.push(make_element('p', 'startet ' + time_until(next['start'])));
         } else {
-            out += '<h2>' + child['name'] + '</h2>';
-            out += '<p>Frei für mehr als 7 Tage</p>';
+            out.push(make_element('h2', child['name']));
+            out.push(make_element('p', 'Frei für mehr als 7 Tage'));
         }
     }
 
@@ -42,7 +47,7 @@ function update_display() {
         document.body.style.background = '#008000';
     }
 
-    document.getElementById('supermeet').innerHTML = out;
+    container.replaceChildren(...out);
 }
 window.setInterval(update_display, 1000);
 

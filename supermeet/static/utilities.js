@@ -113,6 +113,23 @@ function time_until(time) {
 }
 
 
+function make_element(tag, text) {
+    const elem = document.createElement(tag);
+    if (text) {
+        elem.textContent = text;
+    }
+    return elem;
+}
+
+
+// renders '<tag><span>span_text</span> text</tag>' without parsing html
+function make_element_with_span(tag, span_text, text) {
+    const elem = document.createElement(tag);
+    elem.append(make_element('span', span_text), ' ' + text);
+    return elem;
+}
+
+
 function xhr_get(url, callback_func) {
     req = new XMLHttpRequest();
     req.timeout = 10000;
