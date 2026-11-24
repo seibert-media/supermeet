@@ -4,7 +4,7 @@ This is a small flask application which renders a room information screen
 based on the availability in google calendar. Users can interact with
 the booking by changing the end time or booking a new appointment.
 
-Supermeet has been tested to run under python 3.10 and 3.11.
+Supermeet requires python 3.11 or newer.
 
 ## License
 
