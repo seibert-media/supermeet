@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import UTC, datetime
 from os import environ
 from tomllib import loads as toml_load
 
@@ -7,4 +7,4 @@ with open(environ["APP_CONFIG"]) as c:
 
 # this is used by the clients to determine if the display has to be
 # refreshed
-APP_STARTUP = int(datetime.utcnow().timestamp())
+APP_STARTUP = int(datetime.now(UTC).timestamp())

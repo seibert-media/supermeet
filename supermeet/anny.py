@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 
 from requests import Session
 
@@ -66,7 +66,7 @@ class AnnyAPI:
 
     def get_events(self, start=None, until=None, resources=None):
         if start is None:
-            start = datetime.utcnow() - timedelta(days=1)
+            start = datetime.now(UTC) - timedelta(days=1)
 
         if until is None:
             until = start + timedelta(days=14)
@@ -82,11 +82,7 @@ class AnnyAPI:
                 resource_filter += f"&filter[resources]={resource}"
 
             events = self._paginated_get(
-                "bookings?include=resource&filter[end_date]={end}&filter[start_date]={start}{resource_filter}".format(
-                    start=start.isoformat()[:19],
-                    end=until.isoformat()[:19],
-                    resource_filter=resource_filter,
-                )
+                f"bookings?include=resource&filter[end_date]={until.isoformat()[:19]}&filter[start_date]={start.isoformat()[:19]}{resource_filter}"
             )
             for booking in events:
                 if booking["attributes"]["status"] in (

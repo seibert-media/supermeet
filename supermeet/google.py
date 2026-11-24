@@ -1,4 +1,5 @@
-from datetime import datetime, timedelta
+import logging
+from datetime import UTC, datetime, timedelta
 from os import environ
 
 import googleapiclient.discovery
@@ -6,12 +7,14 @@ from google.oauth2 import service_account
 
 from . import CONFIG
 
+logger = logging.getLogger(__name__)
+
 _PROFILE_CACHE = {}
 _PROFILE_CACHE_TTL = 86400
 
 
 def _profile_from_email(email):
-    now = datetime.utcnow().timestamp()
+    now = datetime.now(UTC).timestamp()
     cached = _PROFILE_CACHE.get(email)
     if cached and cached[0] > now:
         return cached[1]
@@ -49,7 +52,7 @@ def _profile_from_email(email):
                 profile["avatar"] = photo.get("url")
                 break
     except Exception:
-        pass
+        logger.exception(f"could not fetch profile of {email}")
 
     _PROFILE_CACHE[email] = (now + _PROFILE_CACHE_TTL, profile)
     return profile
@@ -79,7 +82,7 @@ class GoogleAPI:
 
     def get_room_events(self, room_id, start=None, until=None):
         if start is None:
-            start = datetime.utcnow() - timedelta(hours=1)
+            start = datetime.now(UTC) - timedelta(hours=1)
 
         if until is None:
             until = start + timedelta(days=14)
