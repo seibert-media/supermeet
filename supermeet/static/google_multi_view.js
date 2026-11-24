@@ -2,8 +2,8 @@ events = {};
 
 
 function update_display() {
-    if (!events) {
-        document.getElementById('booked').innerHTML = '<p>Warte auf Kalenderdaten ...</p>';
+    if (Object.keys(events).length == 0) {
+        document.getElementById('supermeet').replaceChildren(make_element('p', 'Warte auf Kalenderdaten ...'));
         return;
     }
 
