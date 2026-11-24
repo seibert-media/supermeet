@@ -29,22 +29,6 @@ def google_room_change_or_book(room_id):
         if start > now and start < next_event_date:
             next_event_date = start
 
-    if current_event:
-        if "end_now" in request.args:
-            try:
-                g.patch_room_event_end_time(
-                    CONFIG["rooms"]["google"][room_id]["id"],
-                    current_event["id"],
-                    g._date(now),
-                )
-            except Exception:
-                app.logger.exception(
-                    "failed changing end time for event {} in calendar {}".format(
-                        current_event["id"], room_id
-                    )
-                )
-            return redirect(url_for("room_view", room_id=room_id))
-
     # limit this to 8 hours. If you need the room for longer, you have
     # to book in google calendar.
     minutes_until_next_event = min(
@@ -61,11 +45,16 @@ def google_room_change_or_book(room_id):
         if not current_event and event_id:
             abort(400)
 
-        try:
-            minutes = int(request.form["input_minutes"])
-        except (KeyError, ValueError):
-            abort(400)
-        minutes = max(0, min(minutes, minutes_until_next_event))
+        if "end_now" in request.form:
+            if not current_event:
+                abort(400)
+            minutes = 0
+        else:
+            try:
+                minutes = int(request.form["input_minutes"])
+            except (KeyError, ValueError):
+                abort(400)
+            minutes = max(0, min(minutes, minutes_until_next_event))
 
         new_end = now + timedelta(minutes=minutes)
         if current_event:

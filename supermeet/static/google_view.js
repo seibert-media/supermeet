@@ -22,12 +22,16 @@ function update_display() {
             out += '<p><span>' + next['title'] + '</span> startet ' + time_until(next['start']) + '</p>';
         }
 
-        out += '<p class="buttons">';
+        out += '<div class="buttons">';
         if ((ends - now) > 600) {
-            out += '<a href="' + booking_link + '?end_now">Vorzeitig beenden</a>';
+            out += '<form method="post" action="' + booking_link + '">';
+            out += '<input type="hidden" name="event_id" value="' + current['id'] + '">';
+            out += '<input type="hidden" name="end_now" value="1">';
+            out += '<input type="submit" value="Vorzeitig beenden">';
+            out += '</form>';
         }
         out += '<a href="' + booking_link + '">Buchung verändern</a>';
-        out += '</p>';
+        out += '</div>';
         avatar = current['creator_avatar'];
     } else if (next) {
         out += '<h2>' + next['title'] + '</h2>';
