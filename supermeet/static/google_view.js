@@ -2,8 +2,10 @@ events = null;
 
 
 function update_display() {
+    container = document.getElementById('supermeet');
+
     if (!events) {
-        document.getElementById('supermeet').innerHTML = '<p>Warte auf Kalenderdaten ...</p>';
+        container.replaceChildren(make_element('p', 'Warte auf Kalenderdaten ...'));
         return;
     }
 
@@ -11,40 +13,56 @@ function update_display() {
     current = get_current_event(events);
     next = get_next_event(events);
 
-    out = '';
+    out = [];
     avatar = ''
     if (current) {
         ends = new Date(current['end']).getTime();
 
-        out += '<h2>' + current['title'] + '</h2>';
-        out += '<p>endet ' + time_until(current['end']) + '</p>';
+        out.push(make_element('h2', current['title']));
+        out.push(make_element('p', 'endet ' + time_until(current['end'])));
         if (next) {
-            out += '<p><span>' + next['title'] + '</span> startet ' + time_until(next['start']) + '</p>';
+            out.push(make_element_with_span('p', next['title'], 'startet ' + time_until(next['start'])));
         }
 
-        out += '<div class="buttons">';
+        buttons = make_element('div');
+        buttons.className = 'buttons';
         if ((ends - now) > 600) {
-            out += '<form method="post" action="' + booking_link + '">';
-            out += '<input type="hidden" name="event_id" value="' + current['id'] + '">';
-            out += '<input type="hidden" name="end_now" value="1">';
-            out += '<input type="submit" value="Vorzeitig beenden">';
-            out += '</form>';
+            form = make_element('form');
+            form.method = 'post';
+            form.action = booking_link;
+            for (const [name, value] of [['event_id', current['id']], ['end_now', '1']]) {
+                hidden = make_element('input');
+                hidden.type = 'hidden';
+                hidden.name = name;
+                hidden.value = value;
+                form.append(hidden);
+            }
+            submit = make_element('input');
+            submit.type = 'submit';
+            submit.value = 'Vorzeitig beenden';
+            form.append(submit);
+            buttons.append(form);
         }
-        out += '<a href="' + booking_link + '">Buchung verändern</a>';
-        out += '</div>';
+        link = make_element('a', 'Buchung verändern');
+        link.href = booking_link;
+        buttons.append(link);
+        out.push(buttons);
         avatar = current['creator_avatar'];
     } else if (next) {
-        out += '<h2>' + next['title'] + '</h2>';
-        out += '<p>startet ' + time_until(next['start']) + '</p>';
+        out.push(make_element('h2', next['title']));
+        out.push(make_element('p', 'startet ' + time_until(next['start'])));
         avatar = next['creator_avatar'];
     } else {
-        out += '<p>Frei für mehr als 7 Tage</p>';
+        out.push(make_element('p', 'Frei für mehr als 7 Tage'));
     }
 
     if (!current) {
-        out += '<p class="buttons">';
-        out += '<a href="' + booking_link + '">Raum buchen</a>';
-        out += '</p>';
+        buttons = make_element('p');
+        buttons.className = 'buttons';
+        link = make_element('a', 'Raum buchen');
+        link.href = booking_link;
+        buttons.append(link);
+        out.push(buttons);
     }
 
     if (current) {
@@ -53,7 +71,7 @@ function update_display() {
         document.body.style.background = '#008000';
     }
 
-    document.getElementById('supermeet').innerHTML = out;
+    container.replaceChildren(...out);
     load_avatar(avatar);
 }
 window.setInterval(update_display, 1000);

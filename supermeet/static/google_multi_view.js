@@ -13,22 +13,22 @@ function update_display() {
     for (const[room, evts] of Object.entries(events)) {
         current = get_current_event(evts);
         next = get_next_event(evts);
-        tmp = '';
+        tmp = [];
 
         if (current) {
-            tmp += '<h2><span>' + room + '</span> ' + current['title'] + '</h2>';
-            tmp += '<p>endet ' + time_until(current['end']) + '</p>';
+            tmp.push(make_element_with_span('h2', room, current['title']));
+            tmp.push(make_element('p', 'endet ' + time_until(current['end'])));
             if (next) {
-                tmp += '<p><span>' + next['title'] + '</span> startet ' + time_until(next['start']) + '</p>';
+                tmp.push(make_element_with_span('p', next['title'], 'startet ' + time_until(next['start'])));
             }
             occupied.push({sort_key: new Date(current['end']).getTime(), content: tmp});
         } else if (next) {
-            tmp += '<h2><span>' + room + '</span> ' + next['title'] + '</h2>';
-            tmp += '<p>startet ' + time_until(next['start']) + '</p>';
+            tmp.push(make_element_with_span('h2', room, next['title']));
+            tmp.push(make_element('p', 'startet ' + time_until(next['start'])));
             free.push({sort_key: new Date(next['start']).getTime(), content: tmp});
         } else {
-            tmp += '<h2>' + room + '</h2>';
-            tmp += '<p>Frei für mehr als 7 Tage</p>';
+            tmp.push(make_element('h2', room));
+            tmp.push(make_element('p', 'Frei für mehr als 7 Tage'));
             free.push({sort_key: Infinity, content: tmp});
         }
     }
@@ -44,12 +44,12 @@ function update_display() {
     free.sort((a, b) => b.sort_key - a.sort_key);
     occupied.sort((a, b) => a.sort_key - b.sort_key);
 
-    real_content = '';
+    real_content = [];
     for (const item of free.concat(occupied)) {
-        real_content += item.content;
+        real_content.push(...item.content);
     }
 
-    document.getElementById('supermeet').innerHTML = real_content;
+    document.getElementById('supermeet').replaceChildren(...real_content);
 }
 window.setInterval(update_display, 1000);
 
