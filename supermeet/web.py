@@ -15,12 +15,8 @@ app.secret_key = environ["FLASK_SECRET"]
 if environ.get("SENTRY_DSN"):
     sentry_sdk.init(
         dsn=environ["SENTRY_DSN"],
-        send_default_pii=True,
-        integrations=[
-            FlaskIntegration(
-                transaction_style="url",
-            ),
-        ],
+        data_collection={"user_info": True},
+        integrations=[FlaskIntegration()],
     )
 
 if not app.debug:
