@@ -5,7 +5,7 @@ function update_display() {
     container = document.getElementById('supermeet');
 
     if (!events) {
-        container.replaceChildren(make_element('p', 'Warte auf Kalenderdaten ...'));
+        replace_children(container, [make_element('p', 'Warte auf Kalenderdaten ...')]);
         return;
     }
 
@@ -71,7 +71,7 @@ function update_display() {
         document.body.style.background = '#008000';
     }
 
-    container.replaceChildren(...out);
+    replace_children(container, out);
     load_avatar(avatar);
 }
 window.setInterval(update_display, 1000);

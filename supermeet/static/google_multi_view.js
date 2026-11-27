@@ -3,7 +3,7 @@ events = {};
 
 function update_display() {
     if (Object.keys(events).length == 0) {
-        document.getElementById('supermeet').replaceChildren(make_element('p', 'Warte auf Kalenderdaten ...'));
+        replace_children(document.getElementById('supermeet'), [make_element('p', 'Warte auf Kalenderdaten ...')]);
         return;
     }
 
@@ -49,7 +49,7 @@ function update_display() {
         real_content.push(...item.content);
     }
 
-    document.getElementById('supermeet').replaceChildren(...real_content);
+    replace_children(document.getElementById('supermeet'), real_content);
 }
 window.setInterval(update_display, 1000);
 

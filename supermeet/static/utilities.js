@@ -130,6 +130,15 @@ function make_element_with_span(tag, span_text, text) {
 }
 
 
+// Element.replaceChildren() needs chrome 86, some displays run older webviews
+function replace_children(container, children) {
+    container.textContent = '';
+    for (const child of children) {
+        container.append(child);
+    }
+}
+
+
 function xhr_get(url, callback_func) {
     req = new XMLHttpRequest();
     req.timeout = 10000;
