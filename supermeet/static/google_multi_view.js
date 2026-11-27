@@ -58,6 +58,6 @@ function fetch_events(room_name) {
     console.info('fetching events for ' + room_name + ' from ' + rooms[room_name]);
 
     xhr_get(rooms[room_name], function(event) {
-        events[room_name] = JSON.parse(req.responseText);
+        events[room_name] = JSON.parse(event.target.responseText);
     });
 }

@@ -56,6 +56,6 @@ function fetch_events() {
     console.info('fetching events from ' + api_room_events);
 
     xhr_get(api_room_events, function(event) {
-        room_info = JSON.parse(req.responseText);
+        room_info = JSON.parse(event.target.responseText);
     });
 }

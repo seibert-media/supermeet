@@ -140,7 +140,7 @@ function replace_children(container, children) {
 
 
 function xhr_get(url, callback_func) {
-    req = new XMLHttpRequest();
+    const req = new XMLHttpRequest();
     req.timeout = 10000;
     req.open('GET', url);
     req.setRequestHeader('Accept', 'application/json');
@@ -214,7 +214,7 @@ window.setInterval(function() {
     console.info('checking if GUI needs reloading because server has restarted');
 
     xhr_get('/api/app-startup-time/', function(event) {
-        startup = parseInt(req.responseText);
+        startup = parseInt(event.target.responseText);
         if (startup > 0 && app_startup < startup) {
             console.warn('startup time has changed, reloading GUI');
             window.location.reload();
